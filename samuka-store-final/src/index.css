@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+body {
+  background-color: #0d0d0d;
+}
+
+/* Animação da tela de abertura (SplashScreen) — logo surge com leve
+   escala + opacidade, o tagline entra em seguida com um fade sutil. */
+@keyframes logoIntro {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(10px);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes taglineIntro {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Faixa rotativa de logos do rodapé (BrandsMarquee) — desloca a trilha
+   duplicada exatamente 50% da sua largura, criando um loop contínuo. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
