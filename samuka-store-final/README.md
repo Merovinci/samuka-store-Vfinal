@@ -2,7 +2,7 @@
 
 E-commerce SPA (React + Vite + Tailwind CSS) da marca **Samuka Store** — "Estilo que impõe. Qualidade que fica."
 
-## 📁 Estrutura
+# Estrutura
 
 ```
 samuka-store/
@@ -25,7 +25,7 @@ samuka-store/
 └── package.json
 ```
 
-## 🚀 Como executar localmente
+# Como executar localmente
 
 ```bash
 git clone <url-do-seu-repositorio>
@@ -36,7 +36,7 @@ npm run dev
 
 Acesse `http://localhost:5173`.
 
-## 🧠 Estados principais (`App.jsx`)
+# Estados principais (`App.jsx`)
 
 | Estado | Função |
 |---|---|
