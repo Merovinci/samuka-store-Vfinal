@@ -29,6 +29,7 @@ export const CATEGORIES = [
   { id: "calcas", label: "Calças", image: "/images/categories/calcas.jpg" },
   { id: "jaquetas", label: "Jaquetas", image: "/images/categories/jaquetas.jpg" },
   { id: "acessorios", label: "Acessórios", image: "/images/categories/acessorios.jpg" },
+  { id: "tenis", label: "Tênis", image: "/images/categories/tenis.jpg" },
 ];
 
 export const ACCESSORY_SUBCATEGORIES = [
@@ -54,6 +55,7 @@ export const COLOR_PALETTE = {
   Prata: "#c0c0c0",
   Verde: "#22543d",
   Bege: "#d8c7a8",
+  Azul: "#0000FF",
 };
 
 // Gera o mapa { Cor: "/images/products/slug/cor.jpg" } automaticamente,
@@ -70,12 +72,12 @@ export const products = [
   // CAMISETAS
   {
     id: 1,
-    name: "Camiseta Essential",
+    name: "Camiseta Nike",
     slug: "camiseta-essential",
     badge: "bestseller",
     featured: true,
     category: "camisetas",
-    price: 149.9,
+    price: 89.9,
     images: imagesFor("camiseta-essential", ["Preto", "Branco", "Cinza"]),
     fallbackGradient: "from-zinc-800 to-zinc-950",
     colors: ["Preto", "Branco", "Cinza"],
@@ -381,6 +383,38 @@ export const products = [
     rating: 4.7,
     reviews: 58,
   },
+  //TENIS
+  {
+  id: 21,
+  name: "Tênis Mizuno Pro 15",
+  slug: "tenis-urban-street",
+  badge: "novo",
+  featured: true,
+  category: "tenis",
+  price: 449.9,
+  images: imagesFor("tenis-urban-street", ["Preto", "Branco"]),
+  fallbackGradient: "from-zinc-800 to-zinc-950",
+  colors: ["Preto", "Branco"],
+  sizes: ["38", "39", "40", "41", "42","43"],
+  description: "Tênis casual leve e confortável para o dia a dia.",
+  rating: 5.0,
+  reviews: 1,
+},
+{id: 22,
+  name: "Tênis New Balance 2000",
+  slug: "tenis-urban-street",
+  badge: "novo",
+  featured: true,
+  category: "tenis",
+  price: 449.9,
+  images: imagesFor("tenis-new-balance-2000", ["Preto", "Branco","Azul"]),
+  fallbackGradient: "from-zinc-800 to-zinc-950",
+  colors: ["Preto", "Branco","Azul"],
+  sizes: ["38", "39", "40", "41", "42","43"],
+  description: "Tênis casual leve e confortável para o dia a dia.",
+  rating: 5.0,
+  reviews: 1,
+},
 ];
 
 export const formatBRL = (value) =>
