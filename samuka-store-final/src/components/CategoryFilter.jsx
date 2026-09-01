@@ -11,11 +11,13 @@
 // -----------------------------------------------------------------------------
 
 import React, { useState } from "react";
-import { Shirt, Layers, Gem } from "lucide-react";
+// 1. Importamos o LayoutGrid (ícone de bloquinhos)
+import { Shirt, Layers, Gem, LayoutGrid } from "lucide-react";
 import { CATEGORIES, ACCESSORY_SUBCATEGORIES } from "../data/products";
 
-// Ícone de fallback por categoria, usado só quando a foto ainda não existe.
+// Ícone de fallback por categoria
 const CATEGORY_ICONS = {
+  todas: LayoutGrid, // 2. Definido para o ícone de bloquinhos empilhados!
   camisetas: Shirt,
   moletons: Shirt,
   calcas: Layers,
