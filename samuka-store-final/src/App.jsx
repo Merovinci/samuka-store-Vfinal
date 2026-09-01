@@ -25,12 +25,8 @@ import SplashScreen from "./components/SplashScreen";
 import WhatsAppButton from "./components/WhatsAppButton";
 
 export default function App() {
-  // Splash de abertura: true no primeiro carregamento, depois nunca mais
-  // aparece durante a sessão (não é uma "tela" do currentScreen de propósito,
-  // pra não interferir na navegação normal por trás dela).
   const [showSplash, setShowSplash] = useState(true);
 
-  // currentScreen: "home" | "product" | "cart" | "favorites"
   const [currentScreen, setCurrentScreen] = useState("home");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -54,6 +50,36 @@ export default function App() {
       return true;
     });
   }, [selectedCategory, selectedSubcategory, searchQuery]);
+
+  // Lógica de Destaques: ajuste a quantidade máxima por categoria aqui abaixo
+  const featuredProductsList = useMemo(() => {
+    const categoryLimits = {
+      camisetas: 2,  // Aparecem até 2 camisetas
+      tenis: 1,      // Apenas 1 tênis
+      jaquetas: 1,   // Apenas 1 jaqueta
+      moletons: 1,   // Apenas 1 moletom
+      acessorios: 1, // Apenas 1 acessório
+    };
+
+    const categoryCounts = {};
+
+    return products.filter((product) => {
+      if (!product.featured) return false;
+
+      const cat = product.category;
+      // Se a categoria não estiver listada no objeto acima, o limite padrão será 1
+      const maxAllowed = categoryLimits[cat] ?? 1;
+
+      categoryCounts[cat] = categoryCounts[cat] || 0;
+
+      if (categoryCounts[cat] < maxAllowed) {
+        categoryCounts[cat] += 1;
+        return true;
+      }
+
+      return false;
+    });
+  }, []);
 
   const toggleFavorite = (id) => {
     setFavorites((prev) => {
@@ -96,22 +122,15 @@ export default function App() {
     setCurrentScreen("product");
   };
 
-  // Usado pelo CTA do HeroBanner ("Ver Coleção" / "Ver Acessórios" etc.) —
-  // mesma lógica de troca de categoria já usada no CategoryFilter.
   const handleBannerCta = (categoryId) => {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(null);
   };
 
-  // Refs usados pela navegação do Header/SiteFooter, pra rolar suavemente
-  // até a seção certa da Home (catálogo, "sobre" ou contato).
   const catalogRef = useRef(null);
   const footerAboutRef = useRef(null);
   const footerContactRef = useRef(null);
 
-  // Navegação do Header e do SiteFooter (Início/Produtos/Sobre/Contato).
-  // Como o app é uma SPA de tela única, "Produtos", "Sobre" e "Contato"
-  // garantem que a Home está ativa e depois rolam até a seção certa.
   const handleNavigate = (target) => {
     setCurrentScreen("home");
 
@@ -126,27 +145,22 @@ export default function App() {
       contact: footerContactRef,
     };
     const ref = refByTarget[target];
-    // pequeno atraso pra garantir que a Home já está renderizada antes de rolar
     setTimeout(() => {
       ref?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   };
 
-  // Limpa o carrinho manualmente, só quando o cliente confirma que já
-  // enviou o pedido pelo WhatsApp (nunca automaticamente no clique do link).
   const confirmOrderSent = () => {
     setCart([]);
     setCurrentScreen("home");
   };
 
   const favoriteProducts = products.filter((p) => favorites.has(p.id));
-  const featuredProducts = products.filter((p) => p.featured);
   const bestSellerProducts = products.filter((p) => p.badge === "bestseller");
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   return (
     <div className="min-h-screen bg-black flex flex-col font-sans relative">
-      {/* ---------------- SPLASH DE ABERTURA ---------------- */}
       {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
 
       <Header
@@ -164,7 +178,7 @@ export default function App() {
       />
 
       <div className="flex-1 pb-20">
-        {/* ---------------- HOME (listagem + filtros) ---------------- */}
+        {/* ---------------- HOME ---------------- */}
         {currentScreen === "home" && (
           <div className="max-w-7xl mx-auto">
             <HeroBanner onSelectCategory={handleBannerCta} />
@@ -172,7 +186,7 @@ export default function App() {
             <HighlightSection
               kicker="🔥 EM ALTA"
               title="Destaques da Semana"
-              products={featuredProducts}
+              products={featuredProductsList}
               onOpenDetail={openProductDetail}
               onSeeAll={() => handleBannerCta(null)}
             />
@@ -307,8 +321,6 @@ export default function App() {
                   </span>
                 </div>
 
-                {/* Checkout real: abre o WhatsApp com a mensagem do pedido
-                    já preenchida. O carrinho NÃO é apagado aqui. */}
                 <a
                   href={buildWhatsAppLink(buildCartMessage(cart))}
                   target="_blank"
@@ -318,8 +330,6 @@ export default function App() {
                   <MessageCircle size={18} /> Finalizar pedido pelo WhatsApp
                 </a>
 
-                {/* Ação separada e explícita — só limpa o carrinho quando o
-                    cliente confirma que já enviou o pedido ao atendente. */}
                 <button
                   onClick={confirmOrderSent}
                   className="w-full mt-3 text-xs text-zinc-500 underline underline-offset-4"
@@ -362,7 +372,6 @@ export default function App() {
         )}
       </div>
 
-      {/* Botão flutuante "falar com atendente" — acessível em todas as telas */}
       <WhatsAppButton />
     </div>
   );
