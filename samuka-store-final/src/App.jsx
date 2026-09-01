@@ -54,9 +54,9 @@ export default function App() {
   // Lógica de Destaques: ajuste a quantidade máxima por categoria aqui abaixo
   const featuredProductsList = useMemo(() => {
     const categoryLimits = {
-      camisetas: 2,  // Aparecem até 2 camisetas
-      tenis: 1,      // Apenas 1 tênis
-      jaquetas: 1,   // Apenas 1 jaqueta
+      camisetas: 1,  // Aparecem até 2 camisetas
+      tenis: 2,      // Apenas 1 tênis
+      jaquetas: 0,   // Apenas 1 jaqueta
       moletons: 1,   // Apenas 1 moletom
       acessorios: 1, // Apenas 1 acessório
     };
