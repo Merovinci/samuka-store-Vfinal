@@ -5,7 +5,6 @@
 // ProductCard, ProductDetail, FooterBenefits, SplashScreen e WhatsAppButton
 // em uma navegação por estado (SPA), sem reload de página.
 // -----------------------------------------------------------------------------
-
 import React, { useMemo, useRef, useState } from "react";
 import { ShoppingBag, Heart, X, Minus, Plus, MessageCircle } from "lucide-react";
 import { products } from "./data/products";
@@ -56,7 +55,7 @@ export default function App() {
     const categoryLimits = {
       camisetas: 1,  // Aparecem até 2 camisetas
       tenis: 2,      // Apenas 1 tênis
-      jaquetas: 0,   // Apenas 1 jaqueta
+      jaquetas: 1,   // Apenas 1 jaqueta
       moletons: 1,   // Apenas 1 moletom
       acessorios: 1, // Apenas 1 acessório
     };
@@ -122,9 +121,16 @@ export default function App() {
     setCurrentScreen("product");
   };
 
+  // Ajuste do CTA dos Banners: Seleciona a categoria e rola até os produtos
   const handleBannerCta = (categoryId) => {
+    setCurrentScreen("home");
     setSelectedCategory(categoryId);
     setSelectedSubcategory(null);
+
+    // Rola a tela até o catálogo de produtos de forma suave
+    setTimeout(() => {
+      catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   };
 
   const catalogRef = useRef(null);
