@@ -21,7 +21,7 @@ function BrandLogo({ brand }) {
         src={`/images/brands/${brand.slug}.png`}
         alt={brand.name}
         onError={() => setFailed(true)}
-        className="h-6 md:h-8 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale"
+        className="h-20 md:h-20 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale"
       />
     );
   }
